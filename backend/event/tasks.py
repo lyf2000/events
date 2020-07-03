@@ -27,12 +27,9 @@ def remind_event(id):
         'meet_date': event.date.strftime('%Y-%m-%d %H:%M'),
         'title': event.title
     }
-    # send_message.delay('event/meeting_remind.html', context, mail_subject, event.author.email)
-    # TODO delay()
-    print(send_message.delay('event/meeting_remind.html', context, mail_subject, event.author.email))
+    print(send_message('event/meeting_remind.html', context, mail_subject, event.author.email))
 
 
-@shared_task
 def send_message(template_name, message_context, mail_subject, to_email):
     message = render_to_string(template_name, message_context)
     msg = EmailMultiAlternatives(mail_subject, '', '', [to_email])
