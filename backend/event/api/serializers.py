@@ -10,7 +10,7 @@ from users.api.serializers import OtherUserSerializer
 
 def validate_only_after_hour(value):
     if value - localtime() <= timedelta(hours=1):
-        raise serializers.ValidationError('You need to specify another time!')
+        raise serializers.ValidationError('You need to specify another time (too close or already in the past)!')
 
 
 class EventSerializer(serializers.ModelSerializer):

@@ -17,7 +17,7 @@
             <span class="title font-weight-light">{{event.title}}</span>
         </v-card-title>
 
-        <v-card-text class="headline font-weight-bold">
+        <v-card-text    class="headline font-weight-bold">
             {{event.text}}
         </v-card-text>
 

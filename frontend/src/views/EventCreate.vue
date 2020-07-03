@@ -1,6 +1,36 @@
 <template>
     <div class="event-create">
 
+        <v-dialog
+                v-model="dialog2"
+                width="500"
+        >
+
+            <v-card>
+                <v-card-title
+                        class="headline grey lighten-2"
+                        primary-title
+                >Error!
+                </v-card-title>
+
+                <v-card-text >{{errorMessage}}
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                            color="primary"
+                            text
+                            @click="dialog2 = false"
+                    >
+                        I accept
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
         <v-card>
             <v-card-title>
                 <span class="headline">Create Event</span>
@@ -101,6 +131,8 @@
                     date: '',
                     time: '',
                 },
+                dialog2: false,
+                errorMessage: '',
                 dateFormatted: '',
                 menu2: false,
                 menu3: false,
@@ -110,11 +142,6 @@
             computedDateFormatted() {
                 return this.formatDate(this.event.date)
             },
-        },
-        watch: {
-            // date(val) {
-            //     this.dateFormatted = this.formatDate(this.event.date)
-            // },
         },
 
         methods: {
@@ -148,19 +175,37 @@
 
                 if (self.event.put) {
                     self.$http.put(`/events/${self.event.id}/`, formData)
-                    .then(function (response) {
-                        self.clearForm();
-                        self.$emit('new-event')
-                    })
+                        .then(function (response) {
+                            self.clearForm();
+                            self.$emit('new-event')
+                        })
+                        .catch(response => {
+                            console.log(response.response.data)
+                            self.errorEventCreate(response.response.data)
+                        })
                 } else {
                     self.$http.post('/events/', formData)
-                    .then(function (response) {
-                        self.clearForm();
-                        self.$emit('new-event')
-                    })
+                        .then(function (response) {
+                            self.clearForm();
+                            self.$emit('new-event')
+                        })
+                        .catch(response => {
+                            console.log(response.response.data)
+                            self.errorEventCreate(response.response.data)
+                        })
                 }
 
 
+            },
+            errorEventCreate(data) {
+                console.log(data)
+                let m = ''
+                for (const [key, value] of Object.entries(data)) {
+                    m += `${key}: ${value.join(', ')}`
+                }
+                console.log('m', m)
+                this.errorMessage = m
+                this.dialog2 = true
             },
             clearForm() {
                 this.event.text = ''
