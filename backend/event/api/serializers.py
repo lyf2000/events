@@ -2,15 +2,20 @@ import datetime
 from datetime import timedelta
 from event.tasks import remind_event
 from rest_framework import serializers
-from django.utils import timezone
+from django.utils.timezone import localtime
 from event.models import Event
 from users.api.serializers import OtherUserSerializer
+
+
+def validate_only_after_hour(value):
+    if value - localtime() <= timedelta(hours=1):
+        raise serializers.ValidationError('You need to specify another time!')
 
 
 class  EventSerializer(serializers.ModelSerializer):
     author = OtherUserSerializer(required=False, read_only=True)
     created = serializers.DateTimeField(format="%b %Y", required=False)
-    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M")
+    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M", validators=[validate_only_after_hour])
 
     # marked = serializers.SerializerMethodField(required=False)
 
