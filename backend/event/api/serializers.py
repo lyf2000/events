@@ -1,5 +1,8 @@
+import datetime
+from datetime import timedelta
+from event.tasks import remind_event
 from rest_framework import serializers
-
+from django.utils import timezone
 from event.models import Event
 from users.api.serializers import OtherUserSerializer
 
@@ -21,10 +24,12 @@ class  EventSerializer(serializers.ModelSerializer):
     #     if self.context['request'].user in obj.added.all():
     #         return 'true'
     #     return 'false'
-
+    # TODO через час и более только
     def create(self, validated_data):
         user = self.context['request'].user
-        return Event.objects.create(
+        event = Event.objects.create(
             **validated_data,
             author=user
         )
+        remind_event.apply_async((event.id,), eta=event.date - timedelta(hours=1))
+        return event

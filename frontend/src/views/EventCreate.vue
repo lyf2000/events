@@ -58,7 +58,6 @@
                                 </template>
                                 <v-time-picker
                                         v-if="menu3"
-                                        :allowed-minutes="allowedStep"
                                         v-model="event.time"
                                         transition="scale-transition"
                                         full-width
@@ -132,8 +131,6 @@
                 const [month, day, year] = date.split('/')
                 return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
             },
-
-            allowedStep: m => m % 10 === 0,
 
             axiosPost(url, data = {}) {
                 return this.$http.post(url, data)
