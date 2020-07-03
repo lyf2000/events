@@ -15,9 +15,7 @@ def remind_event(id):
     try:
         event = Event.objects.get(id=id)
     except Event.DoesNotExist:
-        print('!!expired!!')
         return False
-    print('OK')
     if not check_to_remind_event(event):
         return False
 
@@ -25,9 +23,10 @@ def remind_event(id):
     context = {
         'username': event.author.username,
         'meet_date': event.date.strftime('%Y-%m-%d %H:%M'),
-        'title': event.title
+        'title': event.title,
+        'text': event.text
     }
-    print(send_message('event/meeting_remind.html', context, mail_subject, event.author.email))
+    send_message('event/meeting_remind.html', context, mail_subject, event.author.email)
 
 
 def send_message(template_name, message_context, mail_subject, to_email):
@@ -41,13 +40,6 @@ def check_to_remind_event(event):
     now = localtime() + timedelta(hours=1)
     left = event.date - timedelta(minutes=1)
     right = event.date + timedelta(minutes=1)
-    print(now, left, right)
     if now >= left and now < right:
         return True
     return False
-
-
-@shared_task
-def a():
-    sleep(2)
-    return 1
