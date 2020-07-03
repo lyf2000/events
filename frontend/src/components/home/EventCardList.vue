@@ -122,7 +122,6 @@
                 this.currentEvent.time = dt[1]
                 this.currentEvent['put'] = true
                 this.dialog = true
-
             },
             openEmptyDialoge() {
                 this.currentEvent = {

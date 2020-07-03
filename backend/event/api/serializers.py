@@ -23,7 +23,6 @@ class EventSerializer(serializers.ModelSerializer):
         fields = ('id', 'author', 'title', 'text', 'date', 'created',
                   )
 
-    # TODO PUT - update
     def update(self, instance, validated_data):
         date = validated_data.get('date', None)
         if date:

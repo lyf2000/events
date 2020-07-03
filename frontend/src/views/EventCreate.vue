@@ -112,9 +112,9 @@
             },
         },
         watch: {
-            date(val) {
-                this.dateFormatted = this.formatDate(this.event.date)
-            },
+            // date(val) {
+            //     this.dateFormatted = this.formatDate(this.event.date)
+            // },
         },
 
         methods: {
@@ -173,9 +173,6 @@
                 this.$emit('close-dialog')
             }
         },
-        created() {
-            this.event = this.ob
-        }
     }
 </script>
 
