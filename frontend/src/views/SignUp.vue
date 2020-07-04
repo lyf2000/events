@@ -1,9 +1,41 @@
 <template>
+
     <v-form
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
     >
+
+        <v-dialog
+                v-model="dialog2"
+                width="500"
+        >
+
+            <v-card>
+                <v-card-title
+                        class="headline grey lighten-2"
+                        primary-title
+                >Error!
+                </v-card-title>
+
+                <v-card-text >{{errorMessage}}
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                            color="primary"
+                            text
+                            @click="dialog2 = false"
+                    >
+                        OK
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
         <v-text-field
                 v-model="form.username"
                 :rules="usernameRules"
@@ -42,6 +74,8 @@
     export default {
         name: "SignUp",
         data: () => ({
+            dialog2: false,
+            errorMessage: '',
             valid: true,
             form: {
                 username: '',
@@ -79,10 +113,20 @@
                             self.$router.push('/login')
                         })
                         .catch(response => {
-                            alert('Inputs are wrong!')
+                            self.errorEventCreate(response.response.data)
                         })
                 }
-            }
+            },
+            errorEventCreate(data) {
+                console.log(data)
+                let m = ''
+                for (const [key, value] of Object.entries(data)) {
+                    m += `${key}: ${value}`
+                }
+                console.log('m', m)
+                this.errorMessage = m
+                this.dialog2 = true
+            },
         }
     }
 

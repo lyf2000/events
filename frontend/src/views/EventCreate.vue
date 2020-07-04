@@ -25,7 +25,7 @@
                             text
                             @click="dialog2 = false"
                     >
-                        I accept
+                        OK
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -190,7 +190,6 @@
                             self.$emit('new-event')
                         })
                         .catch(response => {
-                            console.log(response.response.data)
                             self.errorEventCreate(response.response.data)
                         })
                 }
