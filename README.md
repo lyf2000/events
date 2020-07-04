@@ -9,7 +9,7 @@
     # .env file at backend/core directory
     
     # Gmail credits to send email (also u need to allow email sending)
-    EMAIL = <email> # 
+    EMAIL = <email>
     PASSWORD = <password>
     # Postgres DB
     DB_NAME = <db_name>
