@@ -39,15 +39,7 @@
                 <v-container>
                     <v-row>
 
-
-                        <v-col cols="4">
-                            <v-text-field placeholder="Title" v-model="event.title"></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <v-textarea placeholder="Text" v-model="event.text"></v-textarea>
-                        </v-col>
-
-                        <v-col cols="2">
+                            <v-col cols="2">
                             <v-menu
                                     v-model="menu2"
                                     :close-on-content-click="false"
@@ -96,6 +88,14 @@
                                 ></v-time-picker>
                             </v-menu>
                         </v-col>
+                        <v-col cols="4">
+                            <v-text-field placeholder="Title" v-model="event.title"></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-textarea placeholder="Text" v-model="event.text"></v-textarea>
+                        </v-col>
+
+
                     </v-row>
                 </v-container>
                 <small>*indicates required field</small>

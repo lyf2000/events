@@ -13,9 +13,11 @@ from event.models import Event
 @shared_task
 def remind_event(id):
     try:
+        print('id', id)
         event = Event.objects.get(id=id)
     except Event.DoesNotExist:
         return False
+    print('check')
     if not check_to_remind_event(event):
         return False
 
