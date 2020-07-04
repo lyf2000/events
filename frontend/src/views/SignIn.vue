@@ -1,7 +1,7 @@
 <template>
     <div class="signin">
         <v-text-field v-model="username"></v-text-field>
-        <v-text-field v-model="password"></v-text-field>
+        <v-text-field type="password" v-model="password"></v-text-field>
         <v-btn @click.prevent="login">log</v-btn>
     </div>
 </template>
